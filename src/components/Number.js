@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 function Number() {
@@ -14,6 +14,15 @@ function Number() {
     // еще: сам стейт (без функции сетСтейт)
     const [count, setCount] = useState(0)
   
+    useEffect(() => {
+    let number = +localStorage.getItem('number')
+    setCount(number)
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('number', count)
+    }, [count])
+
     function addHandler() {
         let answer = prompt()
         if (isNaN(answer)){
@@ -35,7 +44,7 @@ function Number() {
     return (
      <div>
         <h1>Счетчик</h1>
-      <h1 style={{color: (count % 2 == 0 ? 'red' : 'green')}}>{count}</h1>
+      <h1 style={{color: (count % 2 === 0 ? 'red' : 'green')}}>{count}</h1>
       <button onClick={() => setCount(count + 1)}>Инкремент</button>
       <button onClick={() => setCount(count - 1)}>Декремент</button>
       <button onClick={() => setCount(count + 100)}>Увеличить</button>
